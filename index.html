@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coldin Parker — AI Engineer</title>
+  <meta name="description" content="AI Engineer building LLM-powered agents, RAG pipelines, and multi-agent systems. Based in Texas.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0c0c0e;
+      --surface:  #161618;
+      --surface2: #1f1f22;
+      --border:   #2a2a2e;
+      --accent:   #e07a3a;
+      --accent-d: #b85f28;
+      --text:     #f0ede8;
+      --muted:    #7a7a82;
+      --mono:     'SF Mono', 'Fira Code', 'Consolas', monospace;
+      --sans:     -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg:       #f5f3ef;
+        --surface:  #ffffff;
+        --surface2: #edeae5;
+        --border:   #d8d4cc;
+        --text:     #1a1a1c;
+        --muted:    #6b6b72;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+    .wrap {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .nav-name {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 17px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .nav-name span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 64px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(38px, 6vw, 64px);
+      font-weight: normal;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 20px;
+      text-wrap: balance;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-desc {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 36px;
+      line-height: 1.65;
+    }
+    .hero-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      font-size: 13px;
+      font-family: var(--sans);
+      border-radius: 4px;
+      transition: all 0.15s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-d); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--muted); background: var(--surface2); }
+
+    /* Sections */
+    section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .section-label::before {
+      content: '//  ';
+      color: var(--accent);
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .project-card {
+      background: var(--surface);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: background 0.15s;
+    }
+    .project-card:hover { background: var(--surface2); }
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .project-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .project-links {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .project-link {
+      font-size: 11px;
+      font-family: var(--mono);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 3px;
+      transition: all 0.15s;
+    }
+    .project-link:hover { color: var(--accent); border-color: var(--accent); }
+    .project-link.live { color: var(--accent); border-color: var(--accent); }
+    .project-link.live::before { content: '▸ '; }
+    .project-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--surface2);
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .skill-group h3 {
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .skill-list li {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 12px;
+      position: relative;
+    }
+    .skill-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--border);
+    }
+
+    /* Contact */
+    .contact-row { display: flex; gap: 32px; flex-wrap: wrap; }
+    .contact-item { display: flex; flex-direction: column; gap: 4px; }
+    .contact-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .contact-value { font-size: 14px; color: var(--text); transition: color 0.15s; }
+    .contact-value:hover { color: var(--accent); }
+
+    /* Footer */
+    footer { padding: 24px 0; border-top: 1px solid var(--border); }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .footer-copy { font-size: 12px; color: var(--muted); }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 36px; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 480px) {
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-name">Coldin <span>Parker</span></span>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li>
+        <a href="https://github.com/coldinnn" target="_blank" rel="noopener" class="btn btn-ghost" style="padding:5px 12px;font-size:12px;">
+          GitHub ↗
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <p class="hero-eyebrow">AI Engineer · Python · Backend</p>
+    <h1>Building <em>intelligent</em><br>systems that ship.</h1>
+    <p class="hero-desc">
+      Self-taught engineer focused on LLM-powered agents, RAG pipelines, and
+      multi-agent orchestration. Everything here is deployed and open source.
+    </p>
+    <div class="hero-links">
+      <a href="https://github.com/coldinnn" target="_blank" rel="noopener" class="btn btn-primary">
+        github.com/coldinnn ↗
+      </a>
+      <a href="mailto:coldinp123@gmail.com" class="btn btn-ghost">
+        Get in touch
+      </a>
+    </div>
+  </div>
+
+  <section id="projects">
+    <p class="section-label">Projects</p>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-name">Deep Research Agent</span>
+          <div class="project-links">
+            <a href="https://github.com/coldinnn/deep-research-agent" target="_blank" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Autonomously researches any topic by spawning specialized sub-agents, each pulling from different sources, then synthesizing results into a structured report. RAG pipeline with vector storage, SSE streaming for real-time progress.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">ChromaDB</span>
+          <span class="tag">SSE</span>
+          <span class="tag">RAG</span>
+          <span class="tag">Claude Fable 5</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-name">Autonomous Coding Agent</span>
+          <div class="project-links">
+            <a href="https://github.com/coldinnn/autonomous-coding-agent" target="_blank" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Agent that reads GitHub repositories, understands codebases, writes and commits code, and opens pull requests — all autonomously. Uses tool use to interact with the GitHub API end-to-end.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Claude API</span>
+          <span class="tag">GitHub API</span>
+          <span class="tag">Tool Use</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-name">Multi-Agent Research System</span>
+          <div class="project-links">
+            <a href="https://github.com/coldinnn/multi-agent-research" target="_blank" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Orchestration layer that coordinates multiple specialized Claude agents working in parallel. Custom state management handles sub-agent failures and partial result recovery without losing progress.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Claude API</span>
+          <span class="tag">Multi-agent</span>
+          <span class="tag">Orchestration</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-name">NQ Paper Trader</span>
+          <div class="project-links">
+            <a href="https://web-production-752db1.up.railway.app" target="_blank" class="project-link live">Live</a>
+            <a href="https://github.com/coldinnn/nq-paper-trader" target="_blank" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Live trading bot that calculates value area levels from NQ futures volume profiles and executes a breakout-retest strategy with trailing stop logic. Runs daily during market hours with a real-time dashboard.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Flask</span>
+          <span class="tag">APScheduler</span>
+          <span class="tag">Railway</span>
+          <span class="tag">yfinance</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-name">Slack Agent</span>
+          <div class="project-links">
+            <a href="https://github.com/coldinnn/slack-agent" target="_blank" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Claude-powered Slack bot that handles natural language commands, runs web searches, and summarizes channels on demand via <code style="font-family:'SF Mono','Fira Code','Consolas',monospace;font-size:11px;">/summarize</code>. Uses Socket Mode for real-time message handling.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Slack Bolt</span>
+          <span class="tag">Claude API</span>
+          <span class="tag">Socket Mode</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-name">Voice Agent</span>
+          <div class="project-links">
+            <a href="https://github.com/coldinnn/voice-agent" target="_blank" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          End-to-end voice pipeline: speech-to-text via Whisper, reasoning via Claude with streaming, text-to-speech output. Optimized for low-latency response so conversations feel natural.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Whisper</span>
+          <span class="tag">Claude API</span>
+          <span class="tag">TTS</span>
+          <span class="tag">Streaming</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-name">Claude Eval Harness</span>
+          <div class="project-links">
+            <a href="https://github.com/coldinnn/claude-eval-harness" target="_blank" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Async evaluation framework for Claude models. Runs test suites concurrently, scores outputs against rubrics, and visualizes results with Chart.js. Built for measuring prompt quality and model behavior changes.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Claude API</span>
+          <span class="tag">Async</span>
+          <span class="tag">Evals</span>
+          <span class="tag">Chart.js</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-name">Google Calendar MCP</span>
+          <div class="project-links">
+            <a href="https://github.com/coldinnn/google-calendar-mcp" target="_blank" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          MCP server that gives Claude direct access to Google Calendar — create, read, update, and delete events through natural language. Built with the MCP SDK and Google Calendar API.
+        </p>
+        <div class="project-tags">
+          <span class="tag">TypeScript</span>
+          <span class="tag">MCP SDK</span>
+          <span class="tag">Google Calendar API</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="skills">
+    <p class="section-label">Skills</p>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <ul class="skill-list">
+          <li>Python</li>
+          <li>TypeScript</li>
+          <li>JavaScript</li>
+          <li>SQL</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>AI / ML</h3>
+        <ul class="skill-list">
+          <li>Claude API</li>
+          <li>LLM tool use</li>
+          <li>RAG pipelines</li>
+          <li>Vector databases</li>
+          <li>Multi-agent systems</li>
+          <li>SSE streaming</li>
+          <li>Evals</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Frameworks &amp; Tools</h3>
+        <ul class="skill-list">
+          <li>FastAPI · Flask</li>
+          <li>ChromaDB</li>
+          <li>Slack Bolt</li>
+          <li>MCP SDK</li>
+          <li>Docker</li>
+          <li>Railway · Vercel</li>
+          <li>Git · GitHub</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:28px;max-width:440px;">
+      Open to remote and hybrid roles. Based in Texas (San Antonio / Austin area).
+    </p>
+    <div class="contact-row">
+      <div class="contact-item">
+        <span class="contact-label">Email</span>
+        <a href="mailto:coldinp123@gmail.com" class="contact-value">coldinp123@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">GitHub</span>
+        <a href="https://github.com/coldinnn" target="_blank" rel="noopener" class="contact-value">github.com/coldinnn</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">Coldin Parker · AI Engineer</span>
+    <a href="https://github.com/coldinnn" target="_blank" rel="noopener" style="font-size:12px;color:var(--muted);">GitHub ↗</a>
+  </div>
+</footer>
+
+</body>
+</html>
